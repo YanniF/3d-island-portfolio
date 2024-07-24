@@ -3,6 +3,7 @@ import emailjs from '@emailjs/browser'
 import {Canvas} from "@react-three/fiber";
 import Loader from "../components/Loader.jsx";
 import Fox from "../models/Fox.jsx";
+import useAlert from "../hooks/useAlert.js";
 
 const Contact = () => {
   const formRef = useRef()
@@ -10,6 +11,8 @@ const Contact = () => {
   const [form, setForm] = useState({ name: '', email: '', message: '' })
   const [isLoading, setIsLoading] = useState(false)
   const [currentAnimation, setCurrentAnimation] = useState('idle')
+
+  const { alert, showAlert, hideAlert } = useAlert()
 
   const handleChange = (e) => {
     setForm({
@@ -40,13 +43,13 @@ const Contact = () => {
     ).then(() => {
       setIsLoading(false)
 
-      // TODO: show success message
-      // TODO: hide alert
+      showAlert({ text: 'Message sent successfully.' })
 
       setForm({ name: '', email: '', message: '' })
 
       setTimeout(() => {
         setCurrentAnimation('idle')
+        hideAlert()
       }, 5000)
     }).catch((error) => {
       setIsLoading(false)
@@ -54,7 +57,7 @@ const Contact = () => {
 
       console.error(error)
 
-      // TODO: show error message
+      showAlert({ text: 'Message failed.', type: 'danger' })
     })
   }
 
