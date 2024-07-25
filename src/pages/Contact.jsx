@@ -4,6 +4,7 @@ import {Canvas} from "@react-three/fiber";
 import Loader from "../components/Loader.jsx";
 import Fox from "../models/Fox.jsx";
 import useAlert from "../hooks/useAlert.js";
+import Alert from "../components/Alert.jsx";
 
 const Contact = () => {
   const formRef = useRef()
@@ -50,7 +51,7 @@ const Contact = () => {
       setTimeout(() => {
         setCurrentAnimation('idle')
         hideAlert()
-      }, 5000)
+      }, 4000)
     }).catch((error) => {
       setIsLoading(false)
       setCurrentAnimation('idle')
@@ -63,6 +64,8 @@ const Contact = () => {
 
   return (
     <section className='relative flex lg:flex-row flex-col max-container'>
+      { alert.show && <Alert {...alert} /> }
+
       <div className='flex-1 min-w-[50%] flex flex-col'>
         <h1 className='head-text'>Get in Touch</h1>
 
